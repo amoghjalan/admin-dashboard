@@ -1,10 +1,8 @@
 import {ChatBubbleOutlined, DarkModeOutlined, FullscreenExitOutlined, LanguageOutlined, ListOutlined, NotificationsNoneOutlined, SearchOffOutlined} from '@mui/icons-material'
 import Badge from '@mui/material/Badge'
-import { DarkModeContext } from "../../context/darkModeContext";
-import { useContext } from "react";
+
 
 const Navbar = () => {
-  const { dispatch } = useContext(DarkModeContext);
 
   return (
     <div>
@@ -22,7 +20,7 @@ const Navbar = () => {
             <DarkModeOutlined className='icon'/>
           </div>
           <div className="item">
-            <FullscreenExitOutlined className='icon' onClick={() => dispatch({ type: "TOGGLE" })}/>
+            <FullscreenExitOutlined className='icon'/>
           </div>
           <div className="item">
             <Badge badgeContent={4} color='primary'>

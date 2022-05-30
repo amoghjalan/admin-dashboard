@@ -1,13 +1,14 @@
-import { AccountBalanceWalletOutlined, KeyboardArrowUp, MonetizationOnOutlined, PersonOutlined, RssFeed, ShoppingCartOutlined } from '@mui/icons-material'
+import { AccountBalanceWalletOutlined, KeyboardArrowUp, MonetizationOnOutlined, PersonOutlined, ShoppingCartOutlined } from '@mui/icons-material'
+import { useEffect, useState } from 'react';
 import './widget.scss'
+import { userRequest } from '../../requestMethods';
 
 const Widget = ({type}) => {
-  let data;
+
 
   //temporary
-  const amount = 100;
-  const diff = 25;
-
+  let requestEndpoint;
+  let data;
   switch (type) {
     case "user":
       data={
@@ -18,6 +19,7 @@ const Widget = ({type}) => {
           <PersonOutlined className='icon' style={{color: "crimsom", backgroundColor: "rgba(255, 0, 0.2)"}}/>
         )
       }
+      requestEndpoint='users';
       break;
     case "order":
       data={
@@ -28,6 +30,7 @@ const Widget = ({type}) => {
           <ShoppingCartOutlined className='icon' style={{color: "goldenrod", backgroundColor: "rgba(218, 165, 32 0.2,)"}}/>
         )
       }
+      requestEndpoint='orders'
       break;
     case "earning":
       data={
@@ -38,10 +41,11 @@ const Widget = ({type}) => {
           <MonetizationOnOutlined className='icon' style={{color: "green", backgroundColor: "rgba(0, 128, 0, 0.2)"}}/>
         )
       }
+      requestEndpoint='orders/income'
       break;
     case "balance":
       data={
-        title:"BALANCe",
+        title:"BALANCE",
         isMoney: true,
         link: "See details",
         icon: (
@@ -50,20 +54,33 @@ const Widget = ({type}) => {
       }
       break;
 
-    default:
-      break;
+      default:
+        break;
   }
+
+  const [fetchData, setFetchData] = useState([]);
+
+  useEffect(()=>{
+    const getData = async (requestEndpoint) =>{
+      try{
+        const res = await userRequest.get(requestEndpoint);
+        setFetchData(res.data);
+      }catch(err){}
+    }
+    getData(requestEndpoint)
+  }, [requestEndpoint])
+
   return (
     <div>
       <div className="left">
         <span className="title">{data.title}</span>
-        <span className="counter">{data.isMoney && "Rs."} {amount}</span>
+        <span className="counter">{data.isMoney && "Rs."} {fetchData.total}</span>
         <span className="link">{data.link}</span>
       </div>
       <div className="right">
         <div className="percentage positive">
           <KeyboardArrowUp/>
-          {diff}
+          {fetchData.length}
         </div>
         {data.icon}
       </div>

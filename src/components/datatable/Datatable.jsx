@@ -149,7 +149,7 @@ const Datatable = () => {
               className="deleteButton"
               onClick={() => handleDelete(params.row.id)}
             >
-              Delete
+            Delete
             </div>
           </div>
         );
@@ -159,7 +159,6 @@ const Datatable = () => {
   return (
     <div className="datatable">
       <div className="datatableTitle">
-        Add New User
         <Link to="/users/new" className="link">
           Add New
         </Link>

@@ -6,13 +6,13 @@ import New from "./pages/new/New";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { productInputs, userInputs } from "./formSource";
 import "./style/dark.scss";
-import { useContext } from "react";
-import { DarkModeContext } from "./context/darkModeContext";
 
 function App() {
-  const { darkMode } = useContext(DarkModeContext);
+  const admin = JSON.parse(
+    JSON.parse(localStorage.getItem("persist:root")).user
+  ).currentUser.isAdmin;
   return (
-    <div className={darkMode ? "app dark" : "app"}>
+    <div className={"app"}>
       <BrowserRouter>
         <Routes>
           <Route path="/">
